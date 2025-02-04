@@ -6,10 +6,14 @@ import (
 )
 
 func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "creating a movie")
+	fmt.Fprintln(w, "create a new movie")
 }
 
-func (app *application) getMovieDetailHandler(w http.ResponseWriter, r *http.Request) {
-	id := app.readIDParam(r)
-	fmt.Fprintf(w, "the movie's id is: %d", id)
+func (app *application) showMovieHandler(w http.ResponseWriter, r *http.Request) {
+	id, err := app.readIDParam(r)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	fmt.Fprintf(w, "show the details of movie %d\n", id)
 }
